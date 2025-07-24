@@ -1,0 +1,142 @@
+body {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  padding-top: 20px;
+  background-color: #f8f9fa;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+textarea {
+  min-height: 250px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  /* Fiksna širina fonta za lakše snalaženje */
+}
+
+.output-section {
+  margin-top: 30px;
+}
+
+.output-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  /* Osigurava da nema razmaka između ćelija */
+}
+
+.output-table th,
+.output-table td {
+  padding: 5px;
+  /* Smanji padding da bude kompaktnije */
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+  /* Lagana granica */
+}
+
+.output-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+  /* Za bolju čitljivost redova */
+}
+
+/* Stil za spajanje grada i CMTS-a */
+.city-cmts-header {
+  font-weight: bold;
+  background-color: #e9ecef;
+  /* Svjetlija pozadina za zaglavlje */
+  padding: 8px 5px;
+  margin-top: 15px;
+  /* Razmak iznad novog CMTS bloka */
+  margin-bottom: 10px;
+  /* Razmak ispod naslova i iznad tabele */
+}
+
+/* Stil za red unutar tabele da omogući poravnanje SNR-a */
+.output-table .incident-line {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.output-table .incident-line span:first-child {
+  flex-grow: 1;
+  /* Omogućava prvom spanu da zauzme sav dostupan prostor */
+  white-space: nowrap;
+  /* Sprečava prelamanje teksta */
+  overflow: hidden;
+  /* Skriva prelivajuci tekst */
+  text-overflow: ellipsis;
+  /* Dodaje '...' ako je tekst predug */
+  padding-right: 10px;
+  /* Mali razmak prije SNR-a */
+}
+
+.output-table .incident-line span:last-child {
+  white-space: nowrap;
+  /* Sprečava prelamanje SNR-a */
+  flex-shrink: 0;
+  /* Sprečava SNR da se smanji */
+  text-align: right;
+  /* Poravnava SNR desno */
+  min-width: 40px;
+  /* Minimalna sirina za SNR */
+}
+
+/* Inline stilovi za kopiranje - Prilagođeno za novi format */
+.copy-table-container div[style*='font-weight: bold'] {
+  font-weight: bold;
+}
+
+.copy-table-container div[style*='background-color: #e9ecef'] {
+  background-color: #e9ecef;
+  padding: 8px 5px;
+}
+
+.copy-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.copy-table-container td {
+  padding: 5px;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+}
+
+.copy-table-container tr:nth-child(odd) td {
+  background-color: #f2f2f2;
+}
+
+.copy-table-container tr:nth-child(even) td {
+  background-color: #ffffff;
+}
+
+/* Posebni stilovi za SNR unutar kopiranog HTML-a */
+.copy-table-container .incident-line-copy {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.copy-table-container .incident-line-copy span:first-child {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.copy-table-container .incident-line-copy span:last-child {
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
+  min-width: 40px;
+}

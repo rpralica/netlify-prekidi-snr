@@ -1,0 +1,51 @@
+/* Osnovni stilovi za navigaciju */
+nav {
+  display: flex; /* Koristimo flexbox za lakše poravnanje linkova */
+  justify-content: center; /* Centriramo linkove */
+  gap: 40px; /* Dodaje razmak između Flexbox stavki */
+  background-color: #f8f8f8; /* Neka lagana pozadina za nav */
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Diskretna senka */
+}
+
+nav a {
+  position: relative; /* Važno za pozicioniranje linije (pseudo-elementa) */
+  padding: 10px 0; /* Smanjujemo padding levo/desno jer imamo gap */
+  text-decoration: none;
+  color: #333; /* Tamniji tekst linka */
+  font-weight: 500;
+  overflow: hidden; /* Osigurava da linija ne viri van linka pre animacije */
+  transition: color 0.3s ease; /* Blaga tranzicija za boju teksta */
+  white-space: nowrap; /* Sprečava prelamanje teksta ako je prozor mali */
+}
+
+/* Stilovi za liniju ispod linka (pseudo-element) */
+nav a::after {
+  content: ''; /* Obavezno za pseudo-elemente */
+  position: absolute;
+  left: 50%; /* Pomera početak linije na 50% širine linka */
+  transform: translateX(
+    -50%
+  ); /* Pomera liniju unazad za 50% svoje širine da bi se centrirala */
+  bottom: 0; /* Linija će biti na dnu linka */
+  width: 0; /* Inicijalno je širina 0 (nevidljiva) */
+  height: 3px; /* Debljina linije */
+  background-color: deepskyblue; /* Boja linije */
+  transition: width 0.3s ease-out; /* Animacija širine linije */
+}
+
+/* Stil za hover efekat: linija se polako pojavi */
+nav a:hover::after {
+  width: 100%; /* Linija se proširi na 80% širine linka */
+}
+
+/* Stil za aktivni tab: linija ostaje */
+nav a.active::after {
+  width: 100%; /* Linija ostaje na 80% širine */
+  background-color: deepskyblue; /* Boja linije za aktivni tab */
+}
+
+/* Stil za aktivni tab: boja teksta se menja */
+nav a.active {
+  color: deepskyblue; /* Boja teksta aktivnog taba */
+}

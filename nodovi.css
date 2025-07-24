@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif; /* Example font that supports these characters */
+}
+
+li {
+  font-size: 1.2em;
+}
+
+.blicNod {
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.autocomplete-result {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.highlight {
+  background-color: red;
+  font-size: 1em;
+  color: white;
+  border-radius: 5px;
+}
+
+body {
+  background-color: deepskyblue;
+}
+
+.shd {
+  box-shadow: 5px 5px 10px 1px #807478;
+}
+.tshd {
+  text-shadow: 2px 3px 2px #232020, 5px 5px 10px #000;
+}
