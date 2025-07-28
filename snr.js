@@ -8,6 +8,7 @@ const cityCodes = {
   cz: 'Cazin',
   de: 'Derventa',
   dubica: 'Kozarska Dubica',
+  dbc: 'Kozarska Dubica',
   foca: 'Foča',
   grd: 'Gradiška',
   is: 'Istočno Sarajevo',
