@@ -1,51 +1,100 @@
-function processText() {
-  // Uzimanje teksta iz text area
-  const inputText = document.getElementById('inputText').value;
-
-  // Razdvajanje teksta po novim linijama i uklanjanje praznih linija
-  const lines = inputText.split('\n').filter(line => line.trim() !== '');
-
-  // Spajanje linija sa zarezima
-  const result = lines.join(', ');
-
-  // Prikaz rezultata u divu
-  const outputDiv = document.getElementById('output');
-  outputDiv.innerText = result;
-  document.getElementById('inputText').focus();
-
-  // Kopiranje rezultata u clipboard
-  copyToClipboard(result);
-  const input = document.getElementById('inputText');
-  input.value = '';
-}
-
-function copyToClipboard(text) {
-  // Kreiranje privremenog elementa za kopiranje teksta
-  const tempInput = document.createElement('textarea');
-  tempInput.value = text;
-  document.body.appendChild(tempInput);
-
-  // Selektovanje teksta
-  tempInput.select();
-  tempInput.setSelectionRange(0, 99999); // Za mobilne uređaje
-
-  // Kopiranje teksta u clipboard
-  document.execCommand('copy');
-
-  // Uklanjanje privremenog elementa
-  document.body.removeChild(tempInput);
-
-  // Obavještenje korisnika o kopiranju u clipboard
-  if (document.getElementById('inputText').value.trim() === '') {
+function convertTable() {
+  const input = document.getElementById('input').value.trim();
+  if (!input) {
     Swal.fire({
       icon: 'error',
-      title: 'Prazno polje !!',
-      text: 'Input polje je prazno.',
+      title: 'Greška',
+      text: 'Niste zalijepili tekst!',
     });
+    return;
   }
+
+  const lines = input.split('\n').filter(l => l.trim() !== '');
+  const groups = {};
+
+  lines.forEach(line => {
+    let cols = line.split('\t').map(c => c.trim());
+    if (cols.length < 4) {
+      cols = line.split(/\s{2,}/).map(c => c.trim());
+    }
+    if (cols.length < 4) return;
+
+    const grad = cols[0];
+    if (grad.toLowerCase() === 'bužim') return;
+
+    const lokacija = cols[1];
+    const vrijeme = cols[3];
+    let pocetno = '',
+      kraj = '';
+    if (vrijeme.includes('-')) {
+      [pocetno, kraj] = vrijeme.split('-').map(v => v.trim());
+    } else {
+      pocetno = vrijeme;
+    }
+
+    const key = grad + '||' + pocetno + '||' + kraj;
+    if (!groups[key]) {
+      groups[key] = { grad: grad, lokacije: [], pocetno: pocetno, kraj: kraj };
+    }
+    groups[key].lokacije.push(lokacija);
+  });
+
+  const sortedKeys = Object.keys(groups).sort((a, b) => {
+    const gradA = groups[a].grad.toLowerCase();
+    const gradB = groups[b].grad.toLowerCase();
+    return gradA.localeCompare(gradB);
+  });
+
+  const outputLines = [];
+  const tbody = document.querySelector('#resultTable tbody');
+  tbody.innerHTML = '';
+
+  sortedKeys.forEach(key => {
+    const g = groups[key];
+    const line = [g.grad, '', g.lokacije.join(', '), g.pocetno, g.kraj].join(
+      '\t'
+    );
+    outputLines.push(line);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+            <td>${g.grad}</td>
+            <td></td>
+            <td>${g.lokacije.join(', ')}</td>
+            <td>${g.pocetno}</td>
+            <td>${g.kraj}</td>
+        `;
+    tbody.appendChild(tr);
+  });
+
+  const finalOutput = outputLines.join('\n');
+  document.getElementById('output').value = finalOutput;
+
+  // Kopiranje u clipboard
+  navigator.clipboard
+    .writeText(finalOutput)
+    .then(() => {
+   Swal.fire({
+     title: 'Bravo!',
+     text: 'Podaci su uspješno kopirani u clipboard!',
+     icon: 'success',
+   });
+    })
+    .catch(err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Greška',
+        text: 'Došlo je do greške prilikom kopiranja.',
+      });
+      console.error('Greška prilikom kopiranja:', err);
+    });
 }
 
+
+
+
 // Orion20
+
 document.getElementById('btnOrion20').addEventListener('click', function () {
   const inputArea = document.getElementById('inputOrion20');
   const outputArea = document.getElementById('outputOrion20');
