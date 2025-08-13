@@ -49,3 +49,14 @@ nav a.active::after {
 nav a.active {
   color: deepskyblue; /* Boja teksta aktivnog taba */
 }
+
+/* Dodaj padding-top da body ne bude prekriven navbar-om */
+body {
+    padding-top: 70px; /* prilagodi visinu navbar-a */
+}
+
+/* Opcionalno: stil za aktivni link */
+.nav-link.active {
+    font-weight: bold;
+    color: deepskyblue !important; /* Bootstrap primary color */
+}

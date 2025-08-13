@@ -11,15 +11,31 @@
 </head>
 
 <body>
-    <div id="navbar-placeholder"></div>
-    <br>
-    <div class="container">
-        <div class="container text-center super text-light fs-1 fw-bold bg-info">Prekidi el.energije</div><br>
+<div id="navbar-placeholder"></div>
 
-        <textarea class="form-control container" id="inputText" rows="5" cols="8"></textarea><br>
-        <button class="btn btn-info form-control fs-2 text-white " onclick="processText()">Proces</button><br><br>
-        <p class="fw-bold fs-2 text-dark">Rezultat:</p>
-        <div class="rounded border border-1 border-dark" id="output"></div>
+    <br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 ">
+                <!-- Struja -->
+                <div class="container text-center super text-light fs-1 fw-bold bg-info">Prekidi struje</div><br>
+                <textarea class="form-control container" id="inputText" rows="5" cols="8"></textarea><br>
+                <button class="btn btn-info form-control fs-2 text-white "
+                    onclick="processText()">Proces</button><br><br>
+                <p class="fw-bold fs-2 text-dark">Rezultat:</p>
+                <div class="rounded border border-1 border-dark" id="output"></div>
+            </div>
+            <!-- Orion 20  -->
+            <div class="col-6">
+                <div class="container text-center super text-light fs-1 fw-bold bg-info">Orion 20</div><br>
+              
+                <textarea  placeholder="Zalijepite podatke sa  Orion 20" class="form-control container" id="inputOrion20" rows="5" cols="8"></textarea><br>
+               
+                <textarea  placeholder="Izlazni podaci sa oriona 20" class="form-control container" id="outputOrion20" rows="5" cols="8"></textarea><br>
+
+                <button id="btnOrion20" class="btn btn-success form-control">Process</button>
+            </div>
+        </div>
     </div>
     <br><br>
     <div class="container jumbofoot shadow-lg p-3 mb-5 text-center text-info fs-1 fw-bold  rounded">
