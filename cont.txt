@@ -1,0 +1,26 @@
+.:
+components
+cont.txt
+index copy.html
+index.html
+nodovi.html
+script
+snr.html
+struja.html
+style
+
+./components:
+navbar.html
+
+./script:
+nodovi.js
+prekidi.js
+script.js
+snr.js
+struja.js
+
+./style:
+nodovi.css
+prekidi.css
+snr.css
+style.css
