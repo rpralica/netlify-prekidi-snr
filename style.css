@@ -60,3 +60,14 @@ body {
     font-weight: bold;
     color: deepskyblue !important; /* Bootstrap primary color */
 }
+/*  dodajemo media query */
+@media (max-width: 991px) {
+    nav ul.navbar-nav {
+        flex-direction: column;
+        gap: 0; /* uklanja horizontalni gap na malim ekranima */
+        text-align: center;
+    }
+    nav a {
+        padding: 10px 15px;
+    }
+}
