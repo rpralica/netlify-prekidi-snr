@@ -4,7 +4,7 @@ nav {
   gap: 40px;
   background-color: #f8f8f8;
   padding: 15px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 nav a {
@@ -27,7 +27,7 @@ nav a::after {
   width: 0;
   height: 3px;
   background-color: deepskyblue;
-  transition: width 0.3s ease-out;
+  transition: width 0.8s ease-out;
 }
 
 nav a:hover::after {

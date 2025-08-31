@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flatpickr primjer</title>
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</head>
+
+<body>
+
+    <label for="myDate">Izaberi datum:</label>
+    <input type="text" id="myDate" placeholder="dd.mm.yyyy" style="padding:0.5em; font-size:1em;">
+
+    <script>
+        flatpickr("#myDate", {
+            dateFormat: "d.m.Y",      // naš format datuma
+            altInput: true,           // lijep izgled inputa
+            altFormat: "d.m.Y",       // prikaz na inputu
+            allowInput: true,         // dozvoli ručni unos
+            locale: {
+                weekdays: {
+                    shorthand: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+                    longhand: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"]
+                },
+                months: {
+                    shorthand: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+                    longhand: ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"]
+                }
+            },
+            minDate: "01.01.2000",   // možeš ograničiti minimalni datum
+            maxDate: "31.12.2030",   // maksimalni datum
+            defaultDate: "today",    // početni datum je danas
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+body {
+          background: hsla(186, 33%, 94%, 1);
+
+background: linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+
+background: -moz-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+
+background: -webkit-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1 );
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #navbar-placeholder {
+            margin-bottom: 20px;
+        }
+
+        /* Sekcija Naslov */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1fd7dd, #e6fffa);
+            /* nježna crveno-roza */
+        }
+
+        .section-title-orion {
+            background: linear-gradient(135deg, #d9f0ff, #e6f5ff);
+            /* nježna plavo-cijan */
+        }
+
+        /* Textarea i input polja */
+        .form-control {
+            border: 1px solid #c0c0c0;
+            background: linear-gradient(135deg, #fffaf0, #f0f8ff);
+            /* nježna svijetla pozadina */
+            color: #333;
+        }
+
+        
+      
+
+        .btn-pastel:hover {
+            background: linear-gradient(135deg, #b7e6b7, #d1f2d1);
+        }
+
+        /* Tablica */
+        table {
+            background: linear-gradient(135deg, #fff8f0, #fff3e0);
+        }
+
+        /* Footer */
+        .jumbofoot {
+            background: linear-gradient(135deg, #ffd1dc, #ffe6e6);
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Hover efekti kartica/dodatno */
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }

@@ -28,3 +28,15 @@ function loadAndActivateNavbar() {
 }
 
 document.addEventListener('DOMContentLoaded', loadAndActivateNavbar);
+
+
+// Footer
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('components/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    })
+    .catch(error => console.error('Greška pri učitavanju footera:', error));
+});

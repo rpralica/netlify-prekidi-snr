@@ -1,51 +1,64 @@
-/* Osnovni stilovi za navigaciju */
-nav {
-  display: flex; /* Koristimo flexbox za lakše poravnanje linkova */
-  justify-content: center; /* Centriramo linkove */
-  gap: 40px; /* Dodaje razmak između Flexbox stavki */
-  background-color: #f8f8f8; /* Neka lagana pozadina za nav */
-  padding: 15px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Diskretna senka */
+body {
+  background: linear-gradient(135deg, #c6cfc2, #8cd9e4);
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-nav a {
-  position: relative; /* Važno za pozicioniranje linije (pseudo-elementa) */
-  padding: 10px 0; /* Smanjujemo padding levo/desno jer imamo gap */
-  text-decoration: none;
-  color: #333; /* Tamniji tekst linka */
-  font-weight: 500;
-  overflow: hidden; /* Osigurava da linija ne viri van linka pre animacije */
-  transition: color 0.3s ease; /* Blaga tranzicija za boju teksta */
-  white-space: nowrap; /* Sprečava prelamanje teksta ako je prozor mali */
+#navbar-placeholder {
+  margin-bottom: 20px;
 }
 
-/* Stilovi za liniju ispod linka (pseudo-element) */
-nav a::after {
-  content: ''; /* Obavezno za pseudo-elemente */
-  position: absolute;
-  left: 50%; /* Pomera početak linije na 50% širine linka */
-  transform: translateX(
-    -50%
-  ); /* Pomera liniju unazad za 50% svoje širine da bi se centrirala */
-  bottom: 0; /* Linija će biti na dnu linka */
-  width: 0; /* Inicijalno je širina 0 (nevidljiva) */
-  height: 3px; /* Debljina linije */
-  background-color: deepskyblue; /* Boja linije */
-  transition: width 0.3s ease-out; /* Animacija širine linije */
+/* Naslov sekcije */
+.card-title-section {
+  background: linear-gradient(135deg, #c3c4c5, #e0f7fa);
+  color: #1a1a1a;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-/* Stil za hover efekat: linija se polako pojavi */
-nav a:hover::after {
-  width: 100%; /* Linija se proširi na 80% širine linka */
+/* Input polja */
+.form-control {
+  border: 1px solid #c0c0c0;
+  background: linear-gradient(135deg, #fdf9f5, #f0f8ff);
+  color: #333;
 }
 
-/* Stil za aktivni tab: linija ostaje */
-nav a.active::after {
-  width: 100%; /* Linija ostaje na 80% širine */
-  background-color: deepskyblue; /* Boja linije za aktivni tab */
+/* Dugmad pastelna */
+.btn-pastel {
+  background: linear-gradient(135deg, #d4f1c5, #f0f9e8);
+  border: none;
+  color: #1a1a1a;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Stil za aktivni tab: boja teksta se menja */
-nav a.active {
-  color: deepskyblue; /* Boja teksta aktivnog taba */
+.btn-pastel:hover {
+  background: linear-gradient(135deg, #c1e4a8, #e6f3d4);
+}
+
+/* Textarea */
+textarea.form-control {
+  background: linear-gradient(135deg, #fff8f0, #fff3e0);
+}
+
+/* Rezultat kartica */
+.card-result {
+  background: linear-gradient(135deg, #fff8f0, #ffe6e6);
+  color: #333;
+}
+
+/* Footer */
+.jumbofoot {
+  background: linear-gradient(135deg, #ffd1dc, #ffe6e6);
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Hover na kartice */
+.card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
