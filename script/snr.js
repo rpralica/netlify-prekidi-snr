@@ -53,8 +53,6 @@ function processData() {
   const parsedData = {};
 
   lines.forEach(line => {
-    // Ažuriran regex: (Cable\d+\/\d+(?:\/\d+)?)
-    // Ovo sada dopušta CableX/Y ili CableX/Y/Z
     const match = line.match(
       /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+\.\d+)\s*\d+:\d+\s*(?:AM|PM)/
     );
@@ -64,6 +62,9 @@ function processData() {
       const interfaceFull = match[2].trim();
       const node = match[4].trim();
       const snr = parseFloat(match[5]);
+
+      // NOVO: preskoči sve SNR >= 25
+      if (snr >= 25) return;
 
       const cmtsInterfaceKey = `${cmts}-${interfaceFull}`;
 
@@ -110,7 +111,6 @@ function processData() {
     ) {
       cityCode = 'grd';
     } else if (cmtsHost.toLowerCase().includes('sekovici')) {
-      // Dodato za Šekoviće
       cityCode = 'sekovici';
     } else {
       cityCode = 'ostalo';
@@ -149,8 +149,7 @@ U nastavku spisak čvorišta sa lošim SNR parametrima.Na ovim područjima<br>
       const cmtsDiv = document.createElement('div');
       cmtsDiv.classList.add('cmts-group', 'mb-3');
 
-      const headerText = `
-                    ${cityName} CMTS: ${cmtsName}`;
+      const headerText = `${cityName} CMTS: ${cmtsName}`;
       cmtsDiv.innerHTML += `<div class="city-cmts-header" style="font-weight: bold; background-color: #e9ecef; padding: 8px 5px;">${headerText}</div>`;
 
       const table = document.createElement('table');
@@ -161,11 +160,11 @@ U nastavku spisak čvorišta sa lošim SNR parametrima.Na ovim područjima<br>
         const tr = document.createElement('tr');
         const td = document.createElement('td');
         td.innerHTML = `
-                            <div class="incident-line">
-                                <span>${item.interfaceNode}</span>
-                                <span style="font-weight:bold">${item.snr}</span>
-                            </div>
-                        `;
+          <div class="incident-line">
+            <span>${item.interfaceNode}</span>
+            <span style="font-weight:bold">${item.snr}</span>
+          </div>
+        `;
         tr.appendChild(td);
         tbody.appendChild(tr);
       });
@@ -233,13 +232,13 @@ U nastavku spisak čvorišta sa lošim SNR parametrima.Na ovim područjima<br>
       Swal.fire({
         icon: 'success',
         title: 'Uspješno Kopiranje',
-        text: 'Sadržaj je uspješno kopiran .',
+        text: 'Sadržaj je uspješno kopiran.',
       });
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Kopiranje nije uspjelo ',
+        text: 'Kopiranje nije uspjelo.',
       });
     }
   } catch (err) {
