@@ -1,3 +1,96 @@
+// function convertTable() {
+//   const input = document.getElementById('input').value.trim();
+//   if (!input) {
+//     Swal.fire({
+//       icon: 'error',
+//       title: 'Greška',
+//       text: 'Niste zalijepili tekst!',
+//     });
+//     return;
+//   }
+
+//   const lines = input.split('\n').filter(l => l.trim() !== '');
+//   const groups = {};
+
+//   lines.forEach(line => {
+//     let cols = line.split('\t').map(c => c.trim());
+//     if (cols.length < 4) {
+//       cols = line.split(/\s{2,}/).map(c => c.trim());
+//     }
+//     if (cols.length < 4) return;
+
+//     const grad = cols[0];
+//     if (grad.toLowerCase() === 'bužim') return;
+
+//     const lokacija = cols[1];
+//     const vrijeme = cols[3];
+//     let pocetno = '',
+//       kraj = '';
+//     if (vrijeme.includes('-')) {
+//       [pocetno, kraj] = vrijeme.split('-').map(v => v.trim());
+//     } else {
+//       pocetno = vrijeme;
+//     }
+
+//     const key = grad + '||' + pocetno + '||' + kraj;
+//     if (!groups[key]) {
+//       groups[key] = { grad: grad, lokacije: [], pocetno: pocetno, kraj: kraj };
+//     }
+//     groups[key].lokacije.push(lokacija);
+//   });
+
+//   const sortedKeys = Object.keys(groups).sort((a, b) => {
+//     const gradA = groups[a].grad.toLowerCase();
+//     const gradB = groups[b].grad.toLowerCase();
+//     return gradA.localeCompare(gradB);
+//   });
+
+//   const outputLines = [];
+//   const tbody = document.querySelector('#resultTable tbody');
+//   tbody.innerHTML = '';
+
+//   sortedKeys.forEach(key => {
+//     const g = groups[key];
+//     const line = [g.grad, '', g.lokacije.join(', '), g.pocetno, g.kraj].join(
+//       '\t'
+//     );
+//     outputLines.push(line);
+
+//     const tr = document.createElement('tr');
+//     tr.innerHTML = `
+//             <td>${g.grad}</td>
+//             <td></td>
+//             <td>${g.lokacije.join(', ')}</td>
+//             <td>${g.pocetno}</td>
+//             <td>${g.kraj}</td>
+//         `;
+//     tbody.appendChild(tr);
+//   });
+
+//   const finalOutput = outputLines.join('\n');
+//   document.getElementById('output').value = finalOutput;
+
+//   // Kopiranje u clipboard
+//   navigator.clipboard
+//     .writeText(finalOutput)
+//     .then(() => {
+//    Swal.fire({
+//      title: 'Bravo!',
+//      text: 'Podaci su uspješno kopirani u clipboard!',
+//      icon: 'success',
+//    });
+//     })
+//     .catch(err => {
+//       Swal.fire({
+//         icon: 'error',
+//         title: 'Greška',
+//         text: 'Došlo je do greške prilikom kopiranja.',
+//       });
+//       console.error('Greška prilikom kopiranja:', err);
+//     });
+// }
+
+
 function convertTable() {
   const input = document.getElementById('input').value.trim();
   if (!input) {
@@ -74,11 +167,11 @@ function convertTable() {
   navigator.clipboard
     .writeText(finalOutput)
     .then(() => {
-   Swal.fire({
-     title: 'Bravo!',
-     text: 'Podaci su uspješno kopirani u clipboard!',
-     icon: 'success',
-   });
+      Swal.fire({
+        title: 'Bravo!',
+        text: 'Podaci su uspješno kopirani u clipboard!',
+        icon: 'success',
+      });
     })
     .catch(err => {
       Swal.fire({
@@ -89,7 +182,6 @@ function convertTable() {
       console.error('Greška prilikom kopiranja:', err);
     });
 }
-
 
 
 
