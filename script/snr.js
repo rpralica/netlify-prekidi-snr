@@ -86,11 +86,19 @@ function processData() {
 
   displayResults(groupedByCity);
   document.getElementById('dataInput').value = '';
+
+  // ⬇️ Automatski skrol do Copy dugmeta
+  setTimeout(() => {
+    const copyBtn = document.getElementById('copyAllBtn');
+    if (copyBtn) {
+      copyBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 300);
 }
 
 function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
-  outputContainer.innerHTML = `<div   style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
+  outputContainer.innerHTML = `<div style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
     for (const cmtsName in groupedData[cityName]) {
@@ -111,7 +119,6 @@ function displayResults(groupedData) {
       headerCell.style.padding = '8px';
       headerCell.style.color = 'black';
       headerCell.style.fontSize = '20px';
-
 
       // Data rows
       groupedData[cityName][cmtsName].forEach((item, index) => {
