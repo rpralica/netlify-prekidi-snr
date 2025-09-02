@@ -100,14 +100,18 @@ function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
   outputContainer.innerHTML = `<div style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
-  for (const cityName in groupedData) {https://github.com/rpralica/netlify-prekidi-snr/blob/main/script/snr.js
-    for (const cmtsName in groupedData[cityName]) {
+  for (const cityName in groupedData) {
+    //github.com/rpralica/netlify-prekidi-snr/blob/main/script/snr.js
+    https: for (const cmtsName in groupedData[cityName]) {
       const table = document.createElement('table');
-      table.style.width = '80%';
+      table.style.width = '70%';
       table.style.borderCollapse = 'collapse';
-      table.style.fontSize = '16px';
+      table.style.fontSize = '1rem';
       table.style.fontWeight = 'bold';
       table.style.marginBottom = '20px';
+      table.style.margin = '0 auto'; // centrira tabelu
+      table.style.tableLayout = 'fixed'; // iste kolone u svim browserima
+      table.style.fontFamilly = 'Arial'; // font
 
       // CMTS header
       const headerRow = table.insertRow();
@@ -118,7 +122,8 @@ function displayResults(groupedData) {
       headerCell.style.fontWeight = 'bold';
       headerCell.style.padding = '8px';
       headerCell.style.color = 'black';
-      headerCell.style.fontSize = '20px';
+      headerCell.style.fontSize = '1.25rem';
+      headerCell.style.fontFamilly = 'Arial';
 
       // Data rows
       groupedData[cityName][cmtsName].forEach((item, index) => {
