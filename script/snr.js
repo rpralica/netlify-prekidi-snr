@@ -40,8 +40,7 @@ document.getElementById('processBtn').addEventListener('click', processData);
 document.getElementById('copyAllBtn').addEventListener('click', copyAllTables);
 
 function processData() {
-  const input = document.getElementById('dataInput').value;
-  const lines = input.split('\n').filter(line => line.trim() !== '');
+  const input = document.getElementById('dataInput').value.trim();
   if (!input) {
     Swal.fire({
       icon: 'warning',
@@ -50,202 +49,115 @@ function processData() {
     });
     return;
   }
-  const parsedData = {};
 
+  const parsedData = {};
+  const lines = input.split('\n');
   lines.forEach(line => {
     const match = line.match(
-      /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+\.\d+)\s*\d+:\d+\s*(?:AM|PM)/
+      /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+\.\d+)/
     );
+    if (!match) return;
 
-    if (match) {
-      const cmts = match[1].trim();
-      const interfaceFull = match[2].trim();
-      const node = match[4].trim();
-      const snr = parseFloat(match[5]);
+    const cmts = match[1].trim();
+    const interfaceFull = match[2].trim();
+    const node = match[4].trim();
+    const snr = parseFloat(match[5]);
+    if (snr >= 25) return; // preskoči visoke SNR
 
-      // NOVO: preskoči sve SNR >= 25
-      if (snr >= 25) return;
-
-      const cmtsInterfaceKey = `${cmts}-${interfaceFull}`;
-
-      if (!parsedData[cmtsInterfaceKey]) {
-        parsedData[cmtsInterfaceKey] = {
-          cmts: cmts,
-          interface: interfaceFull,
-          node: node,
-          minSnr: snr,
-        };
-      } else if (snr < parsedData[cmtsInterfaceKey].minSnr) {
-        parsedData[cmtsInterfaceKey].minSnr = snr;
-      }
-    } else {
-      console.warn('Linija se ne podudara sa očekivanim formatom:', line);
-    }
+    const key = `${cmts}-${interfaceFull}`;
+    if (!parsedData[key])
+      parsedData[key] = { cmts, interface: interfaceFull, node, minSnr: snr };
+    else if (snr < parsedData[key].minSnr) parsedData[key].minSnr = snr;
   });
 
   const groupedByCity = {};
-
-  for (const key in parsedData) {
-    const item = parsedData[key];
+  Object.values(parsedData).forEach(item => {
     const cmtsHost = item.cmts;
-    let cityCode = '';
-
-    const cmtsPrefixMatch = cmtsHost.match(/^([a-z]+)-/);
-    if (cmtsPrefixMatch) {
-      cityCode = cmtsPrefixMatch[1].toLowerCase();
-    } else if (cmtsHost.toLowerCase().includes('zvornik')) {
-      cityCode = 'zvornik';
-    } else if (
-      cmtsHost.toLowerCase().includes('derventa') ||
-      cmtsHost.toLowerCase().includes('der')
-    ) {
-      cityCode = 'der';
-    } else if (
-      cmtsHost.toLowerCase().includes('doboj') ||
-      cmtsHost.toLowerCase().includes('do')
-    ) {
-      cityCode = 'do';
-    } else if (
-      cmtsHost.toLowerCase().includes('grd') ||
-      cmtsHost.toLowerCase().includes('gradiska')
-    ) {
-      cityCode = 'grd';
-    } else if (cmtsHost.toLowerCase().includes('sekovici')) {
-      cityCode = 'sekovici';
-    } else {
-      cityCode = 'ostalo';
-    }
-
+    let cityCode = cmtsHost.match(/^([a-z]+)-/)?.[1]?.toLowerCase() || 'ostalo';
     const cityName = cityCodes[cityCode] || 'Nepoznat Grad (' + cityCode + ')';
-
-    if (!groupedByCity[cityName]) {
-      groupedByCity[cityName] = {};
-    }
-    if (!groupedByCity[cityName][cmtsHost]) {
+    if (!groupedByCity[cityName]) groupedByCity[cityName] = {};
+    if (!groupedByCity[cityName][cmtsHost])
       groupedByCity[cityName][cmtsHost] = [];
-    }
-
-    const outputLine = {
+    groupedByCity[cityName][cmtsHost].push({
       interfaceNode: `${item.interface} · ${item.node}`,
       snr: item.minSnr,
-    };
-    groupedByCity[cityName][cmtsHost].push(outputLine);
-  }
+    });
+  });
 
   displayResults(groupedByCity);
-
-  document.getElementById('copyAllBtn').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('dataInput').value = '';
 }
 
 function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
-  outputContainer.innerHTML += `<strong>Kolege,
-U nastavku spisak čvorišta sa lošim SNR parametrima.Na ovim područjima<br>
- moguća degradacija servisa ka korisniku: </strong>`;
+  outputContainer.innerHTML = `<div   style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
     for (const cmtsName in groupedData[cityName]) {
-      const cmtsDiv = document.createElement('div');
-      cmtsDiv.classList.add('cmts-group', 'mb-3');
-
-      const headerText = `${cityName} CMTS: ${cmtsName}`;
-      cmtsDiv.innerHTML += `<div class="city-cmts-header" style="font-weight: bold; background-color: #e9ecef; padding: 8px 5px;">${headerText}</div>`;
-
       const table = document.createElement('table');
-      table.classList.add('table', 'table-bordered', 'output-table');
+      table.style.width = '70%';
+      table.style.borderCollapse = 'collapse';
+      table.style.fontSize = '16px';
+      table.style.fontWeight = 'bold';
+      table.style.marginBottom = '20px';
 
-      const tbody = document.createElement('tbody');
-      groupedData[cityName][cmtsName].forEach(item => {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.innerHTML = `
-          <div class="incident-line">
-            <span>${item.interfaceNode}</span>
-            <span style="font-weight:bold">${item.snr}</span>
-          </div>
-        `;
-        tr.appendChild(td);
-        tbody.appendChild(tr);
+      // CMTS header
+      const headerRow = table.insertRow();
+      const headerCell = headerRow.insertCell();
+      headerCell.colSpan = 2;
+      headerCell.textContent = `${cityName} CMTS: ${cmtsName}`;
+      headerCell.style.background = '#52aefaff';
+      headerCell.style.fontWeight = 'bold';
+      headerCell.style.padding = '8px';
+      headerCell.style.color = 'black';
+      headerCell.style.fontSize = '20px';
+
+
+      // Data rows
+      groupedData[cityName][cmtsName].forEach((item, index) => {
+        const row = table.insertRow();
+        row.style.background = index % 2 === 0 ? '#ffffff' : '#bbdbf5ff'; // striped
+
+        const cell1 = row.insertCell();
+        cell1.textContent = item.interfaceNode;
+        cell1.style.width = '80%';
+        cell1.style.padding = '5px';
+
+        const cell2 = row.insertCell();
+        cell2.textContent = item.snr;
+        cell2.style.width = '20%';
+        cell2.style.textAlign = 'right';
+        cell2.style.fontWeight = 'bold';
+        cell2.style.padding = '5px';
       });
-      table.appendChild(tbody);
-      cmtsDiv.appendChild(table);
-      outputContainer.appendChild(cmtsDiv);
+
+      outputContainer.appendChild(table);
     }
   }
+
   document.getElementById('outputSection').style.display = 'block';
 }
 
-async function copyAllTables() {
-  const outputTablesContainer = document.getElementById(
-    'outputTablesContainer'
-  );
-  const tempDiv = document.getElementById('copyTempDiv');
-  tempDiv.innerHTML = '';
-
-  let htmlToCopy = `<br><strong>Kolege,
-U nastavku spisak čvorišta sa lošim SNR parametrima.Na ovim područjima<br>
- moguća degradacija servisa ka korisniku: </strong> <br><br><br>`;
-
-  for (const cmtsGroup of outputTablesContainer.querySelectorAll(
-    '.cmts-group'
-  )) {
-    const headerText = cmtsGroup.querySelector('.city-cmts-header').textContent;
-    htmlToCopy += `<div style="font-weight: bold; background-color: #e9ecef; padding: 8px 5px; margin-top: 15px; margin-bottom: 10px;">${headerText}</div>`;
-
-    htmlToCopy += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;"><tbody>`;
-    cmtsGroup
-      .querySelectorAll('.output-table tbody tr')
-      .forEach((row, index) => {
-        const interfaceNode = row.querySelector(
-          '.incident-line span:first-child'
-        ).textContent;
-        const snr = row.querySelector(
-          '.incident-line span:last-child'
-        ).textContent;
-        const bgColor = index % 2 === 0 ? '#f2f2f3' : '#ffffff';
-
-        htmlToCopy += `<tr style="background-color: ${bgColor};">`;
-        htmlToCopy += `<td style="padding: 5px; vertical-align: top; border: 1px solid #dee2e6;">`;
-        htmlToCopy += `<div style="display: flex; justify-content: space-between; width: 100%;">`;
-        htmlToCopy += `<span style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px;">${interfaceNode}</span>`;
-        htmlToCopy += `<span style="white-space: nowrap; flex-shrink: 0; text-align: right; min-width: 40px;"><strong>${snr}</strong></span>`;
-        htmlToCopy += `</div>`;
-        htmlToCopy += `</td>`;
-        htmlToCopy += `</tr>`;
-      });
-    htmlToCopy += `</tbody></table>`;
-    htmlToCopy += `<table style="border: none; width: 100%; margin-top: 10px; margin-bottom: 10px;"><tbody><tr><td style="padding: 0; line-height: 0; border: none;">&nbsp;</td></tr></tbody></table>`;
-  }
-
-  tempDiv.innerHTML = htmlToCopy;
-
+function copyAllTables() {
+  const output = document.getElementById('outputTablesContainer');
+  const range = document.createRange();
+  range.selectNode(output);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
   try {
-    const range = document.createRange();
-    range.selectNode(tempDiv);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-
-    const successful = document.execCommand('copy');
-
-    if (successful) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Uspješno Kopiranje',
-        text: 'Sadržaj je uspješno kopiran.',
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Kopiranje nije uspjelo.',
-      });
-    }
-  } catch (err) {
-    console.error('Greška pri kopiranju:', err);
-    alert('Greška pri kopiranju: ' + err.message);
-  } finally {
-    window.getSelection().removeAllRanges();
-    tempDiv.innerHTML = '';
+    document.execCommand('copy');
+    Swal.fire({
+      icon: 'success',
+      title: 'Uspješno Kopiranje',
+      text: 'Sadržaj je uspješno kopiran.',
+    });
+  } catch {
+    Swal.fire({
+      icon: 'error',
+      title: 'Greška',
+      text: 'Kopiranje nije uspjelo.',
+    });
   }
+  sel.removeAllRanges();
 }
