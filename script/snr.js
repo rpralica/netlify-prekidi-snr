@@ -100,10 +100,10 @@ function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
   outputContainer.innerHTML = `<div style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
-  for (const cityName in groupedData) {
+  for (const cityName in groupedData) {https://github.com/rpralica/netlify-prekidi-snr/blob/main/script/snr.js
     for (const cmtsName in groupedData[cityName]) {
       const table = document.createElement('table');
-      table.style.width = '70%';
+      table.style.width = '80%';
       table.style.borderCollapse = 'collapse';
       table.style.fontSize = '16px';
       table.style.fontWeight = 'bold';
