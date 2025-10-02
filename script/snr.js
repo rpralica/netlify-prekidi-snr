@@ -2,6 +2,7 @@ const cityCodes = {
   bl: 'Banja Luka',
   bn: 'Bijeljina',
   brod: 'Brod',
+  brd: 'Brod',
   br: 'Brčko',
   bt: 'Bratunac',
   cajnice: 'Čajniče',
@@ -10,6 +11,7 @@ const cityCodes = {
   dubica: 'Kozarska Dubica',
   dbc: 'Kozarska Dubica',
   foca: 'Foča',
+  fo: 'Foča',
   grd: 'Gradiška',
   is: 'Istočno Sarajevo',
   kv: 'Kotor Varoš',
@@ -98,13 +100,14 @@ function processData() {
 
 function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
-  outputContainer.innerHTML = `<div style="margin-bottom:30px; font-size:16px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
+  outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:7rem;font-size:18px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
     //github.com/rpralica/netlify-prekidi-snr/blob/main/script/snr.js
     https: for (const cmtsName in groupedData[cityName]) {
       const table = document.createElement('table');
       table.style.width = '70%';
+      table.classList='bordered'
       table.style.borderCollapse = 'collapse';
       table.style.fontSize = '1rem';
       table.style.fontWeight = 'bold';
@@ -118,7 +121,7 @@ function displayResults(groupedData) {
       const headerCell = headerRow.insertCell();
       headerCell.colSpan = 2;
       headerCell.textContent = `${cityName} CMTS: ${cmtsName}`;
-      headerCell.style.background = '#52aefaff';
+      //headerCell.style.background = '#52aefaff';
       headerCell.style.fontWeight = 'bold';
       headerCell.style.padding = '8px';
       headerCell.style.color = 'black';
@@ -128,7 +131,7 @@ function displayResults(groupedData) {
       // Data rows
       groupedData[cityName][cmtsName].forEach((item, index) => {
         const row = table.insertRow();
-        row.style.background = index % 2 === 0 ? '#ffffff' : '#bbdbf5ff'; // striped
+       // row.style.background = index % 2 === 0 ? '#ffffff' : '#bbdbf5ff'; // striped
 
         const cell1 = row.insertCell();
         cell1.textContent = item.interfaceNode;
