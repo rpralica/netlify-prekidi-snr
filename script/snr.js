@@ -24,6 +24,7 @@ const cityCodes = {
   rog: 'Rogatica',
   sekovici: 'Šekovići',
   sok: 'Sokolac',
+  sokolac: 'Sokolac',
   srb: 'Srbac',
   trb: 'Trebinje',
   tslc: 'Teslić',
