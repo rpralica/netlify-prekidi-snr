@@ -104,52 +104,47 @@ function displayResults(groupedData) {
   outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:7rem;font-size:18px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
-    for (const cmtsName in groupedData[cityName]) {
+    //github.com/rpralica/netlify-prekidi-snr/blob/main/script/snr.js
+    https: for (const cmtsName in groupedData[cityName]) {
       const table = document.createElement('table');
-      // Inline stilovi za celu tabelu
       table.style.width = '70%';
+      table.classList='bordered'
       table.style.borderCollapse = 'collapse';
+      table.style.fontSize = '1rem';
+      table.style.fontWeight = 'bold';
       table.style.marginBottom = '20px';
-      table.style.tableLayout = 'fixed';
-      // Postavljamo font za konzistentnost u svim browserima
-      table.style.fontFamily = 'Arial, sans-serif';
+      table.style.margin = '0 auto'; // centrira tabelu
+      table.style.tableLayout = 'fixed'; // iste kolone u svim browserima
+      table.style.fontFamilly = 'Arial'; // font
 
       // CMTS header
       const headerRow = table.insertRow();
       const headerCell = headerRow.insertCell();
       headerCell.colSpan = 2;
       headerCell.textContent = `${cityName} CMTS: ${cmtsName}`;
-
-      // Stilovi za CMTS naslov (uz levu ivicu)
-      //headerCell.style.fontWeight = 'bold';
-      // Manji padding za naslov (5px levo)
-      headerCell.style.padding = '8px 5px 8px 5px';
+      //headerCell.style.background = '#52aefaff';
+      headerCell.style.fontWeight = 'bold';
+      headerCell.style.padding = '8px';
       headerCell.style.color = 'black';
-      // headerCell.style.fontSize = '1rem';
-      headerCell.style.textAlign = 'left';
+      headerCell.style.fontSize = '1.25rem';
+      headerCell.style.fontFamilly = 'Arial';
 
       // Data rows
       groupedData[cityName][cmtsName].forEach((item, index) => {
         const row = table.insertRow();
+       // row.style.background = index % 2 === 0 ? '#ffffff' : '#bbdbf5ff'; // striped
 
-        // ĆELIJA 1: INTERFEJS/NODE (Širina smanjena na 75% da bi se izbeglo sečenje u Firefoxu)
         const cell1 = row.insertCell();
         cell1.textContent = item.interfaceNode;
-        cell1.style.width = '80%'; // Smanjena širina za sigurnost
+        cell1.style.width = '80%';
+        cell1.style.padding = '5px';
 
-        // Veći levi padding (25px) za uvlačenje u odnosu na naslov
-        cell1.style.padding = '5px 5px 5px 80px';
-        cell1.style.textAlign = 'left';
-
-        // ĆELIJA 2: SNR VREDNOST (20%)
         const cell2 = row.insertCell();
         cell2.textContent = item.snr;
         cell2.style.width = '20%';
-
-        // Desni padding
-        cell2.style.padding = '5px 15px 5px 5px';
         cell2.style.textAlign = 'right';
         cell2.style.fontWeight = 'bold';
+        cell2.style.padding = '5px';
       });
 
       outputContainer.appendChild(table);
@@ -161,22 +156,17 @@ function displayResults(groupedData) {
 
 function copyAllTables() {
   const output = document.getElementById('outputTablesContainer');
-
-  // Nema više kloniranja i ručnog dodavanja stilova!
-  // Stilizovani HTML se preuzima direktno iz output-a.
-
   const range = document.createRange();
   range.selectNode(output);
   const sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
-
   try {
     document.execCommand('copy');
     Swal.fire({
       icon: 'success',
       title: 'Uspješno Kopiranje',
-      text: 'Sadržaj je uspješno kopiran sa stilom.',
+      text: 'Sadržaj je uspješno kopiran.',
     });
   } catch {
     Swal.fire({
@@ -185,6 +175,5 @@ function copyAllTables() {
       text: 'Kopiranje nije uspjelo.',
     });
   }
-
   sel.removeAllRanges();
 }

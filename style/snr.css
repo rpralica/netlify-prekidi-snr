@@ -1,66 +1,84 @@
-
-  body {
+body {
   background: linear-gradient(135deg, #c6cfc2, #8cd9e4);
   color: #333;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-        #navbar-placeholder {
-            margin-bottom: 20px;
-        }
+#navbar-placeholder {
+  margin-bottom: 20px;
+}
 
-        /* Textarea */
-        .form-control {
-            border: 1px solid #c0c0c0;
-            background: linear-gradient(135deg, #fffaf0, #f0f8ff);
-            /* pastelna svijetla narančasta */
-            color: #333;
-        }
+/* Textarea */
+.form-control {
+  border: 1px solid #c0c0c0;
+  background: linear-gradient(135deg, #fffaf0, #f0f8ff);
+  /* pastelna svijetla narančasta */
+  color: #333;
+}
 
-        /* Dugmad */
-        .btn-pastel-primary {
-            background: linear-gradient(135deg, #cce7ff, #e0f5ff);
-            /* pastel plava */
-            border: none;
-            color: #1a1a1a;
-            font-weight: bold;
-            transition: all 0.2s ease-in-out;
-        }
+/* Dugmad */
+.btn-pastel-primary {
+  background: linear-gradient(135deg, #cce7ff, #e0f5ff);
+  /* pastel plava */
+  border: none;
+  color: #1a1a1a;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
 
-        .btn-pastel-primary:hover {
-            background: linear-gradient(135deg, #b8dbff, #ccefff);
-        }
+.btn-pastel-primary:hover {
+  background: linear-gradient(135deg, #b8dbff, #ccefff);
+}
 
-        .btn-pastel-success {
-            background: linear-gradient(135deg, #d4f1c5, #e0f7e0);
-            /* pastel zelena */
-            border: none;
-            color: #1a1a1a;
-            font-weight: bold;
-            transition: all 0.2s ease-in-out;
-        }
+.btn-pastel-success {
+  background: linear-gradient(135deg, #d4f1c5, #e0f7e0);
+  /* pastel zelena */
+  border: none;
+  color: #1a1a1a;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
 
-        .btn-pastel-success:hover {
-            background: linear-gradient(135deg, #b7e6b7, #d1f2d1);
-        }
+.btn-pastel-success:hover {
+  background: linear-gradient(135deg, #b7e6b7, #d1f2d1);
+}
 
-        /* Output sekcija */
-        .output-section {
-            background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
-            /* blaži pastel plavi gradijent */
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: block;
-            /* uvijek vidljivo kada se prikaže */
-        }
+/* Output sekcija */
+.output-section {
+  background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+  /* blaži pastel plavi gradijent */
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: block;
+  /* uvijek vidljivo kada se prikaže */
+}
 
-        /* Footer */
-        .jumbofoot {
-            background: linear-gradient(135deg, #ffd1dc, #ffe6e6);
-            color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
+/* Footer */
+.jumbofoot {
+  background: linear-gradient(135deg, #ffd1dc, #ffe6e6);
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+/* Stil za prvu kolonu (Interface i Node) */
+.snr-interface-cell {
+  /* Uvučeno sa leve strane (padding-left) */
+  padding-left: 5rem !important;
+  /* Koristim !important jer direktno stilizovanje u JS-u (padding: 5px) može biti jače. */
+}
+
+/* Stil za drugu kolonu (SNR Vrednost) */
+.snr-value-cell {
+  /* Uvučeno sa desne strane (padding-right) */
+  padding-right: 5rem !important;
+}
+
+/* Opšte stilizovanje za sve ćelije (td) ako želiš da se rešiš direktnog 'padding: 5px' u JS-u */
+/* table.bordered td {
+    padding: 5px;
+} 
+*/
