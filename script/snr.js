@@ -101,7 +101,8 @@ function processData() {
 
 function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
-  outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:7rem;font-size:18px;"><strong>Kolege, U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
+  outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:1rem;font-size:16px;"><strong>Kolege,<br>
+   U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
     for (const cmtsName in groupedData[cityName]) {
@@ -118,7 +119,7 @@ function displayResults(groupedData) {
       const headerRow = table.insertRow();
       const headerCell = headerRow.insertCell();
       headerCell.colSpan = 2;
-      headerCell.textContent = `• ${cityName}  CMTS: ${cmtsName}`;
+      headerCell.textContent = `• ${cityName} CMTS: ${cmtsName}`;
 
       // Stilovi za CMTS naslov (uz levu ivicu)
       headerCell.style.fontWeight = 'bold';
@@ -134,11 +135,11 @@ function displayResults(groupedData) {
 
         // ĆELIJA 1: INTERFEJS/NODE (Širina smanjena na 75% da bi se izbeglo sečenje u Firefoxu)
         const cell1 = row.insertCell();
-        cell1.textContent = '· ' + item.interfaceNode;
+        cell1.textContent = ' · ' + item.interfaceNode;
         cell1.style.width = '80%'; // Smanjena širina za sigurnost
 
         // Veći levi padding (25px) za uvlačenje u odnosu na naslov
-       // cell1.style.padding = '0px 5px 5px 60px';
+        //cell1.style.padding = '5px 5px 5px 80px';
         cell1.style.textAlign = 'left';
 
         // ĆELIJA 2: SNR VREDNOST (20%)
