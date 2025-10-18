@@ -118,10 +118,10 @@ function displayResults(groupedData) {
       const headerRow = table.insertRow();
       const headerCell = headerRow.insertCell();
       headerCell.colSpan = 2;
-      headerCell.textContent = `${cityName} CMTS: ${cmtsName}`;
+      headerCell.textContent = `• ${cityName}  CMTS: ${cmtsName}`;
 
       // Stilovi za CMTS naslov (uz levu ivicu)
-      //headerCell.style.fontWeight = 'bold';
+      headerCell.style.fontWeight = 'bold';
       // Manji padding za naslov (5px levo)
       headerCell.style.padding = '8px 5px 8px 5px';
       headerCell.style.color = 'black';
@@ -134,11 +134,11 @@ function displayResults(groupedData) {
 
         // ĆELIJA 1: INTERFEJS/NODE (Širina smanjena na 75% da bi se izbeglo sečenje u Firefoxu)
         const cell1 = row.insertCell();
-        cell1.textContent = item.interfaceNode;
+        cell1.textContent = '· ' + item.interfaceNode;
         cell1.style.width = '80%'; // Smanjena širina za sigurnost
 
         // Veći levi padding (25px) za uvlačenje u odnosu na naslov
-        cell1.style.padding = '5px 5px 5px 80px';
+       // cell1.style.padding = '0px 5px 5px 60px';
         cell1.style.textAlign = 'left';
 
         // ĆELIJA 2: SNR VREDNOST (20%)
@@ -150,6 +150,7 @@ function displayResults(groupedData) {
         cell2.style.padding = '5px 15px 5px 5px';
         cell2.style.textAlign = 'right';
         cell2.style.fontWeight = 'bold';
+        cell2.style.paddingLeft = '300px';
       });
 
       outputContainer.appendChild(table);
