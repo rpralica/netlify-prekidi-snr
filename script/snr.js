@@ -56,15 +56,35 @@ function processData() {
   const parsedData = {};
   const lines = input.split('\n');
   lines.forEach(line => {
+    // 💡 POTPUNO NOVI REGEX
+    // Sada hvatamo i SNR i VREME!
     const match = line.match(
-      /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+\.\d+)/
+      // Grupa 1 (CMTS Host)      Grupa 2 (Interface)       Grupa 3 (Upstream)   Grupa 4 (NODE)   Grupa 5 (SNR)
+      /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+(?:\.\d+)?)\s*\d{1,2}:\d{2}\s(?:AM|PM)/
     );
-    if (!match) return;
+
+    // Provera da li je meč pronađen
+    if (!match) {
+      // Dodatna provera za linije koje nemaju format vremena 3:08 PM, već samo SNR
+      // (ovo je fallback za slučaj da su podaci nekompletni, što je manje verovatno)
+      const simplifiedMatch = line.match(
+        /(.+?)\s*-\s*(Cable\d+\/\d+(?:\/\d+)?)-(upstream\d+)\s*·\s*(.+?)\s*(\d+(?:\.\d+)?)/
+      );
+      if (simplifiedMatch) {
+        // Ako se ipak radi o starom formatu, nastavi sa njim
+        // Ovo je sigurnosna mera, ali problem je često bio u vremenu
+        // Ali, za sada ćemo se držati novog regexa koji uključuje vreme.
+        // Ako je linija uvek sa vremenom, onda nema potrebe za fallback-om.
+      }
+      return;
+    }
 
     const cmts = match[1].trim();
     const interfaceFull = match[2].trim();
-    const node = match[4].trim();
-    const snr = parseFloat(match[5]);
+    // match[3] = upstream (nije potrebno izdvajati posebno)
+    const node = match[4].trim(); // NODE je sada preciznije definisan
+    const snr = parseFloat(match[5]); // SNR je na 5. poziciji
+
     if (snr >= 25) return; // preskoči visoke SNR
 
     const key = `${cmts}-${interfaceFull}`;
@@ -101,8 +121,8 @@ function processData() {
 
 function displayResults(groupedData) {
   const outputContainer = document.getElementById('outputTablesContainer');
-  outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:1rem;font-size:16px;"><strong>Kolege,<br>
-   U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
+  outputContainer.innerHTML = `<div style="margin-bottom:30px; margin-left:1rem;font-size:20px;"><strong>Kolege,<br>
+    U nastavku spisak čvorišta sa lošim SNR parametrima. Na ovim područjima moguća degradacija servisa ka korisniku:</strong></div>`;
 
   for (const cityName in groupedData) {
     for (const cmtsName in groupedData[cityName]) {
