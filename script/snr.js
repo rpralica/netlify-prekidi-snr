@@ -85,6 +85,9 @@ function processData() {
     const node = match[4].trim(); // NODE je sada preciznije definisan
     const snr = parseFloat(match[5]); // SNR je na 5. poziciji
 
+    // 🛑 MODIFIKACIJA 1: Preskoči SNR = 0.0 (ili 0)
+    if (snr <= 0) return; // preskoči SNR koji je nula ili negativan (ako postoji)
+
     if (snr >= 25) return; // preskoči visoke SNR
 
     const key = `${cmts}-${interfaceFull}`;
